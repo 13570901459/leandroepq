@@ -1,43 +1,147 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="stylerelógio.css">
-    <title>Despertador</title>
+    <title>Cronômetro com Alarme e Som</title>
+    <style>
+        body {        
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #000; /* Cor de fundo preto */
+            color: cyan; /* Cor do número ciano */
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #FF0000; /* Vermelho */
+            padding: 1px;
+            width: 6%;            
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            border-radius: 10px;        
+        }
+
+        #btn-voltar {
+            background-color: #FF0000; /* Vermelho */
+            color: white; /* Letra branca */
+            padding: 5px 10px;
+            border: none;
+            border-radius: 10px; /* Ajustando o valor do border-radius */
+            cursor: pointer;
+            font-size: 1em;
+            text-decoration: none; /* Removendo sublinhado do link */
+            margin-left: 10px; /* Espaço à esquerda */
+        }
+
+        #clock {
+            font-size: 15em;
+            margin-bottom: 25px;
+        }
+
+        #btn-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        button {
+            padding: 20px 40px;
+            font-size: 2em;
+            background-color: cyan; /* Alterado para ciano */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 100px; /* Espaçamento entre os botões */
+        }
+
+        input[type="time"] {
+            font-size: 2em;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px; /* Adiciona espaço entre o campo de entrada do alarme e os botões */
+            display: none; /* Oculta o campo de entrada do alarme */
+        }
+    </style>
 </head>
-
 <body>
-    <div class="container">
-        <div class="alarm-container">
-            <img src="images/alarm-1673577_1280.png" class="alarm-img" alt="">
-            <h1>00:00:00 PM</h1>
-            <div class="content">
-                <div class="alarm-controls">
-                    <select>
-                        <option value="Hour" selected disabled hidden> Horas </option>
-                    </select>
-                </div>
+    <header>
+        <a href="menu1.html" id="btn-voltar">Voltar</a>
+    </header>
 
-                <div class="alarm-controls">
-                    <select>
-                        <option value="Minute" selected disabled hidden> Minutos </option>
-                    </select>
-                </div>
-
-                <div class="alarm-controls">
-                    <select>
-                        <option value="AM/PM" selected disabled hidden> AM/PM </option>
-                    </select>
-                </div>
-            </div>
-            <button>Ativar Alarme</button>
+    <div id="container">
+        <div id="clock">00:00:00</div>
+        <input type="time" id="alarmTime">
+        <div id="btn-container">
+            <button onclick="toggleTimer()">Iniciar/Pausar</button>
+            <button onclick="resetTimer()">Zerar</button>
         </div>
     </div>
 
-    <script src="main.js"></script>
-</body>
+    <audio id="alarmSound" src="alarme.mp3"></audio>
 
+    <script>
+        var timerInterval;
+        var running = false;
+        var seconds = 0;
+        var minutes = 0;
+        var hours = 0;
+        var alarmTime = null;
+
+        function updateClock() {
+            seconds++;
+
+            if (seconds >= 60) {
+                seconds = 0;
+                minutes++;
+            }
+
+            if (minutes >= 60) {
+                minutes = 0;
+                hours++;
+            }
+
+            var timeString = (hours < 10 ? '0' + hours : hours) + ':' +
+                             (minutes < 10 ? '0' + minutes : minutes) + ':' +
+                             (seconds < 10 ? '0' + seconds : seconds);
+            document.getElementById('clock').textContent = timeString;
+
+            // Verifica se o alarme deve ser acionado (removido)
+            // Lógica de alarme removida
+        }
+
+        function toggleTimer() {
+            if (!running) {
+                timerInterval = setInterval(updateClock, 1000);
+                document.querySelector('button').textContent = 'Pausar';
+                running = true;
+            } else {
+                clearInterval(timerInterval);
+                document.querySelector('button').textContent = 'Iniciar';
+                running = false;
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            document.getElementById('clock').textContent = '00:00:00';
+            seconds = 0;
+            minutes = 0;
+            hours = 0;
+            running = false;
+            document.querySelector('button').textContent = 'Iniciar';
+        }
+    </script>
+</body>
 </html>
