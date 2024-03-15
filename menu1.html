@@ -6,6 +6,19 @@
     <title>Exemplo de Tag HTML</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden; /* Evita que a barra de rolagem horizontal apareça */
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
         .menu-lateral {
             background-color: #333;
             color: #fff;
@@ -17,6 +30,8 @@
             padding-top: 50px; /* Ajuste o espaçamento do topo conforme necessário */
             transition: width 0.3s ease; /* Adiciona transição para a largura */
             box-shadow: 3px 0 0 cyan; /* Adiciona sombra à direita */
+            z-index: 1000; /* Garante que o menu esteja na frente do conteúdo */
+            overflow-y: auto; /* Adiciona rolagem vertical se necessário */
         }
 
         .menu-lateral.expandido {
@@ -105,9 +120,18 @@
         .btn-expandir .icon-list {
             margin-right: 5px;
         }
+
+        .container {
+            margin-left: 80px; /* Largura do menu */
+            padding-top: 50px; /* Ajusta o espaçamento para evitar que o conteúdo fique atrás do menu */
+            padding-right: 20px; /* Adiciona um pequeno espaço à direita para evitar o corte do conteúdo */
+        }
     </style>
 </head>
 <body>
+    <header>
+        <h1>Método De Estudo EPQ </h1>
+    </header>
     <nav class="menu-lateral">
         <ul>
             <li class="item-menu">
@@ -161,8 +185,7 @@
             <li class="item-menu">
                 <a href="#">
                     <span class="icone"><i class="fas fa-clipboard-list"></i></span>
-                    <span class="txt-link">Simulado</span>
-                </a>
+                    <span class="txt-link">Simulado</span>  </a>
             </li>
             <!-- Novo texto link -->
             <li class="item-menu">
@@ -176,6 +199,16 @@
         <button class="btn-expandir" onclick="toggleMenu()">
             <i class="fas fa-list icon-list"></i>
         </button>
+    </nav>
+    <div class="container">
+        <main>
+    <h2>Conteúdo Principal</h2>
+    <p>Bem-vindo ao meu site. Este é o conteúdo principal da página.</p>
+        <iframe src="https://docs.google.com/spreadsheets/d/1Ga-6Opiv17YPGvzbZ-FRFAfwkumdMDyXgEVBGIFHMIU/edit#gid=1153356739" width="100%" height="800" frameborder="0" scrolling="yes"></iframe>
+    <h3>Planilha EPQ</h3>
+</main>
+
+    </div>
 
     <script>
         function toggleMenu() {
@@ -185,4 +218,3 @@
     </script>
 </body>
 </html>
-
